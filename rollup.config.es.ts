@@ -8,9 +8,9 @@ import babel from 'rollup-plugin-babel';
 const configs: RollupOptions = {
     input: "src/index.ts",
     output: {
-        file: "build/index.js",
-        format: "es",
-        name: "byzkutiltest"
+        file: "build/pdf-signature-utils-es.min.js",
+        format: "esm",
+        name: "pdfSignatureUtils"
     },
     plugins: [
         typescript(),
@@ -23,7 +23,18 @@ const configs: RollupOptions = {
                 ["@babel/plugin-transform-runtime"],
             ]
         }),
-        // terser(), //压缩代码
+        terser({
+            ie8: true,
+            compress: {
+                drop_console: true,
+                drop_debugger: true,
+                ie8: true,
+            },
+            output: {
+                ie8: true,
+                comments: () => false,
+            },
+        }),
     ],
     external: [
         "spark-md5",

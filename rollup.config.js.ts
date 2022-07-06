@@ -14,9 +14,9 @@ const Global = `var process = {
 const configs: RollupOptions = {
     input: "src/index.ts",
     output: {
-        file: "build/index.js",
+        file: "build/pdf-signature-utils-iife.min.js",
         format: "iife",
-        name: "byzkpdflocalecall",
+        name: "pdfSignatureUtils",
         banner: Global,
     },
     plugins: [

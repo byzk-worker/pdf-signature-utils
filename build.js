@@ -12,7 +12,7 @@ console.info("清理完毕");
 
 console.info("开始编译...")
 const crossSpwan = require("cross-spawn");
-const buildRsp = crossSpwan.sync("rollup --config rollup.config.ts --configPlugin typescript2");
+const buildRsp = crossSpwan.sync("rollup --config rollup.config.es.ts --configPlugin typescript2");
 if (buildRsp.error) {
     console.error(buildRsp.error);
     exit(buildRsp.status);

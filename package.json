@@ -1,14 +1,14 @@
 {
-  "name": "@byzk/pdf-locale-call",
-  "libName": "byzkpdflocalecall",
+  "name": "@byzk/pdf-signature-utils",
+  "libName": "pdfSignatureUtils",
   "version": "0.0.0",
-  "description": "博雅PDF阅读器通讯库",
-  "main": "index.js",
+  "description": "PDF文档签章工具",
+  "main": "./dist/pdf-signature-utils-es.min.js",
   "types": "./index.d.ts",
   "license": "MIT",
   "scripts": {
     "build": "node build.js",
-    "dev": "rollup --config rollup.config.dev.ts --configPlugin typescript2 -w",
+    "dev": "rollup --config rollup.config.js.ts --configPlugin typescript2 -w",
     "test": "jest"
   },
   "devDependencies": {

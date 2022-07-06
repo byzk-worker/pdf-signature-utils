@@ -18,5 +18,6 @@ pdf签章工具库，主要为签章解决方案， 此库为签章相关接口�
 ### 浏览器中使用
 
 ```html
-<script src="http://raw.githack.com/SuLinXin66/bk-usbkey-request-base/master/dist/bk-usbkey-request-base-iife.min.js"></script>
+<script src="https://raw.githubusercontent.com/byzk-worker/pdf-signature-utils/main/build/dist/pdf-signature-utils-iife.min.js"></script>
 ```
+

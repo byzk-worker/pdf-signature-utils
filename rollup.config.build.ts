@@ -18,11 +18,6 @@ const configs: RollupOptions = {
             format: "cjs",
             name: "pdfSignatureUtils"
         },
-        {
-            file: "build/pdf-signature-utils-iife.min.js",
-            format: "iife",
-            name: "pdfSignatureUtils"
-        },
     ],
     plugins: [
         typescript(),

@@ -17,6 +17,11 @@ if (buildRsp.error) {
     console.error(buildRsp.error);
     exit(buildRsp.status);
 }
+const buildRsp2 = crossSpwan.sync("rollup --config rollup.config.dev.ts --configPlugin typescript2");
+if (buildRsp2.error) {
+    console.error(buildRsp2.error);
+    exit(buildRsp2.status);
+}
 console.info("编译完成!");
 
 
@@ -43,6 +48,15 @@ try {
     exit(1);
 }
 console.info("复制完成");
+
+console.info("复制demos文件夹");
+try {
+    fsExtend.copySync('./demos', './build/demos');
+} catch (error) {
+    exit(1);
+}
+console.info("复制完成");
+
 
 console.info("移动打包文件");
 try {

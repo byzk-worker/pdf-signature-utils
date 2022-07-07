@@ -141,7 +141,7 @@ export const fileOpen = async (req: OpenFileReq, options?: ConnectConfig): Promi
  * @param fileId 
  * @returns 
  */
-export const fileDownloadUrlGet = (fileId: string) => `${baseUrl}/download/sealFile?fileId=${fileId}`;
+export const fileDownloadUrlGet = (fileId: string) => `${baseUrl()}/download/sealFile?fileId=${fileId}`;
 
 /**
  * 文件删除接口

@@ -1,6 +1,6 @@
 import { ConnectConfig } from "../types";
 import { getSealList, verifySeal, signature, signQF, signMany, signKeyword } from "../service";
-import { SealVerifyInfo, SealListRsp, SealInReq, SignatureByGapReq, SealInManyReq, SignatureByKeywordsReq, SignatureByPositionInfo } from "../types/SealType";
+import { SealVerifyInfo, SealListRsp, SignatureByGapReq, SignatureByKeywordsReq, SignatureByPositionInfo } from "../types/SealType";
 import { arrayIsNull, isNull } from "../utils";
 
 interface IverifyRsp {
@@ -68,6 +68,33 @@ export const sealList = async (password: string, options?: ConnectConfig): Promi
     return rst;
 }
 
+interface SealInReq {
+    /**
+     * 印章id
+     */
+    sealId: string,
+    /**
+     * 文件id
+     */
+    fileId: string,
+    /**
+     * 页码
+     */
+    page: number,
+    /**
+     * x坐标
+     */
+    positionX: number,
+    /**
+     * y坐标
+     */
+    positionY: number,
+    /**
+     * 设备密码
+     */
+    pwd: string
+}
+
 /**
  * 文件签章接口
  * @param params 
@@ -77,6 +104,46 @@ export const sealList = async (password: string, options?: ConnectConfig): Promi
 const sealIn = async (params: SealInReq, options?: ConnectConfig): Promise<string> => {
     const rst = await signature(params, options);
     return rst;
+}
+
+// /**
+//  * 多页盖章请求参数
+//  */
+interface SealInManyReq {
+    /**
+     * 印章id
+     */
+    sealId: string,
+    /**
+     * 文件id
+     */
+    fileId: string,
+    /**
+     * 要盖章的页码，不传盖整个文档
+     */
+    pages: SealInManyInfo[]
+    /**
+     * 设备密码
+     */
+    pwd: string
+}
+
+// /**
+//  * 多页盖章微调对象
+//  */
+interface SealInManyInfo {
+    /**
+     * 页码
+     */
+    page: number,
+    /**
+     * x坐标
+     */
+    positionX: number,
+    /**
+     * y坐标
+     */
+    positionY: number,
 }
 
 /**

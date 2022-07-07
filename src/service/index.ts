@@ -1,5 +1,5 @@
 import { baseUrl } from "../config";
-import { ConnectConfig, SignatureByKeywordsReq, SealInManyReq, SignatureByGapReq, SealInReq } from "../types";
+import { ConnectConfig, SignatureByKeywordsReq, SignatureByGapReq } from "../types";
 import { httpReq, socketReq } from "./utils";
 
 interface BeginUploadParam {
@@ -21,7 +21,7 @@ interface SliceUploadParam {
     buffer: ArrayBuffer
 }
 export const sliceUpload = async (payload: SliceUploadParam, options?: ConnectConfig) => {
-    var url = baseUrl + '/bigFileUpload';
+    var url = baseUrl() + '/bigFileUpload';
     if (payload.url) {
         url = payload.url;
     }
@@ -46,13 +46,13 @@ export const verifySeal = async (id: string, options?: ConnectConfig) => socketR
 export const getSealList = async (password: string, options?: ConnectConfig) => socketReq({ cmd: '/sealMgr/getSealListByKeyNo', data: password }, options);
 
 
-export const signature = async (req: SealInReq, options?: ConnectConfig) => socketReq({ cmd: '/seal/sign', data: { id: req.sealId, fileId: req.fileId, pageNum: req.page, x: req.positionX, y: req.positionY, keyPwd: req.pwd } }, options);
+export const signature = async (req: any, options?: ConnectConfig) => socketReq({ cmd: '/seal/sign', data: { id: req.sealId, fileId: req.fileId, pageNum: req.page, x: req.positionX, y: req.positionY, keyPwd: req.pwd } }, options);
 
 
 export const signQF = async (req: SignatureByGapReq, options?: ConnectConfig) => socketReq({ cmd: '/seal/signQF', data: { id: req.sealId, fileId: req.fileId, pageNum: 1, x: req.x, y: req.y, size: req.splitPageNum, keyPwd: req.password } }, options);
 
 
-export const signMany = async (req: SealInManyReq, options?: ConnectConfig) =>
+export const signMany = async (req: any, options?: ConnectConfig) =>
     socketReq({
         cmd: '/seal/signSiteBatch',
         data: {

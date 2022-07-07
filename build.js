@@ -59,6 +59,8 @@ console.info("移动完成");
 
 console.info("移除不必要文件...");
 try {
-    fs.unlinkSync('./build/index.config.d.ts')
+    // fs.unlinkSync('./build/index.config.d.ts');
+    fsExtend.removeSync('./build/utils');
+    fsExtend.removeSync('./build/service');
 } catch { }
 console.info("打包完毕");

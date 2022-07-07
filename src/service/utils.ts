@@ -7,7 +7,7 @@ import { isNull, isObject } from '../utils'
 var connectReady = false;
 export const connectInit = () => {
     Begin({
-        url: `${baseUrl}/dev`,
+        url: `${baseUrl()}/dev`,
         connectionListener: (t) => {
             connectReady = t === "open";
             console.info(`客户端服务连接状态：${connectReady ? '已连接' : '已断开'}`)

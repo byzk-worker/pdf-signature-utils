@@ -93,10 +93,10 @@ fileOpen({
 ### 请求参数
 | 名称 | 类型 | 必填 | 描述 |
 | --- | --- | --- | --- |
-| req | OpenFileReq | 是 | 请求参数对象 |
-| options | ConnectConfig | 否 | 请求配置对象 |
+| req | <a href="#OpenFileReq" >OpenFileReq</a> | 是 | 请求参数对象 |
+| options | <a href="#ConnectConfig" >ConnectConfig</a> | 否 | 请求配置对象 |
 
-### OpenFileReq 对象
+### <div id="OpenFileReq" >OpenFileReq 对象</div> 
 | 名称 | 类型 | 必填 | 描述 |
 | --- | --- | --- | --- |
 | name | string | 是 | 名称 |
@@ -104,7 +104,7 @@ fileOpen({
 | rawHtmlEle | HTMLInputElement | 否 | 原始HTML文件节点 |
 | slicingPath | string | 否 | 分片地址， http文件上传接口地址，http全拼 |
 
-### ConnectConfig 对象
+### <div id="ConnectConfig" >ConnectConfig 对象</div>
 ##### ConnectConfig 对象为接口请求配置对象，后续接口参数中的ConnectConfig对象同此对象
 | 名称 | 类型 | 必填 | 描述 |
 | --- | --- | --- | --- |
@@ -143,7 +143,7 @@ fileOpen({
 | 名称 | 类型 | 必填 | 描述 |
 | --- | --- | --- | --- |
 | fileId | string | 是 | 文件Id |
-| options | ConnectConfig | 否 | 请求配置对象 |
+| options | <a href="#ConnectConfig" >ConnectConfig</a> | 否 | 请求配置对象 |
 
 ### 响应参数
 | 名称 | 类型 | 必填 | 描述 |
@@ -161,14 +161,14 @@ fileOpen({
 | --- | --- | --- | --- |
 | fileId | string | 是 | 文件Id |
 | name | string | 是 | 签名域名称 |
-| options | ConnectConfig | 否 | 请求配置对象 |
+| options | <a href="#ConnectConfig" >ConnectConfig</a> | 否 | 请求配置对象 |
 
 ### 响应参数
 | 名称 | 类型 | 必填 | 描述 |
 | --- | --- | --- | --- |
-| - | SealVerifyInfo | 是 | 验章结果对象，下文中验证PDF中所有印章接口中的SealVerifyInfo对象同此对象 |
+| - | <a href="#SealVerifyInfo" >SealVerifyInfo</a> | 是 | 验章结果对象，下文中验证PDF中所有印章接口中的SealVerifyInfo对象同此对象 |
 
-### SealVerifyInfo 对象
+### <div id="SealVerifyInfo" >SealVerifyInfo 对象</div>
 | 名称 | 类型 | 必填 | 描述 |
 | --- | --- | --- | --- |
 | signatureName | string | 是 | 签名域名称 |
@@ -187,12 +187,12 @@ fileOpen({
 | 名称 | 类型 | 必填 | 描述 |
 | --- | --- | --- | --- |
 | fileId | string | 是 | 文件Id |
-| options | ConnectConfig | 否 | 请求配置对象 |
+| options | <a href="#ConnectConfig" >ConnectConfig</a> | 否 | 请求配置对象 |
 
 ### 响应参数
 | 名称 | 类型 | 必填 | 描述 |
 | --- | --- | --- | --- |
-| - | SealVerifyInfo[] | 是 | 验章结果对象集合 |
+| - | <a href="#SealVerifyInfo" >SealVerifyInfo</a>[] | 是 | 验章结果对象集合 |
 
 
 ## sealList 获取印章列表
@@ -203,20 +203,20 @@ fileOpen({
 | 名称 | 类型 | 必填 | 描述 |
 | --- | --- | --- | --- |
 | password | string | 是 | usbkey设备密码 |
-| options | ConnectConfig | 否 | 请求配置对象 |
+| options | <a href="#ConnectConfig" >ConnectConfig</a> | 否 | 请求配置对象 |
 
 ### 响应参数
 | 名称 | 类型 | 必填 | 描述 |
 | --- | --- | --- | --- |
-| - | SealListRsp | 是 | 印章查询接口结果对象 |
+| - | <a href="#SealListRsp" >SealListRsp</a> | 是 | 印章查询接口结果对象 |
 
-### SealListRsp 对象
+### <div id="SealListRsp" >SealListRsp 对象</div>
 | 名称 | 类型 | 必填 | 描述 |
 | --- | --- | --- | --- |
-| sealInfoVo | SealListInfo[] | 是 | 印章对象集合 |
+| sealInfoVo | <a href="#SealListInfo" >SealListInfo</a>[] | 是 | 印章对象集合 |
 | total | number | 是 | 印章总数 |
 
-### SealListInfo 对象
+### <div id="SealListInfo" >SealListInfo 对象</div>
 | 名称 | 类型 | 必填 | 描述 |
 | --- | --- | --- | --- |
 | id | string | 是 | 印章Id |
@@ -240,11 +240,11 @@ fileOpen({
 | --- | --- | --- | --- |
 | fileId | string | 是 | 文件Id |
 | sealId | string | 是 | 印章Id |
-| positions | SignatureByPositionInfo[] | 是 | 坐标信息对象数组 |
+| positions | <a href="#SignatureByPositionInfo" >SignatureByPositionInfo</a>[] | 是 | 坐标信息对象数组 |
 | password | string | 是 | 当前插入usbkey设备密码 |
-| options | ConnectConfig | 否 | 请求配置对象 |
+| options | <a href="#ConnectConfig" >ConnectConfig</a> | 否 | 请求配置对象 |
 
-### SignatureByPositionInfo 对象
+### <div id="SignatureByPositionInfo" >SignatureByPositionInfo 对象</div>
 | 名称 | 类型 | 必填 | 描述 |
 | --- | --- | --- | --- |
 | pageNo | number | 是 | 页码 |
@@ -264,10 +264,10 @@ fileOpen({
 ### 请求参数
 | 名称 | 类型 | 必填 | 描述 |
 | --- | --- | --- | --- |
-| params | SignatureByKeywordsReq | 是 | 关键字签章请求对象 |
-| options | ConnectConfig | 否 | 请求配置对象 |
+| params | <a href="#SignatureByKeywordsReq" >SignatureByKeywordsReq</a> | 是 | 关键字签章请求对象 |
+| options | <a href="#ConnectConfig" >ConnectConfig</a> | 否 | 请求配置对象 |
 
-### SignatureByKeywordsReq 对象
+### <div id="SignatureByKeywordsReq" >SignatureByKeywordsReq 对象</div>
 | 名称 | 类型 | 必填 | 描述 |
 | --- | --- | --- | --- |
 | sealId | string | 是 | 印章id |
@@ -290,10 +290,10 @@ fileOpen({
 ### 请求参数
 | 名称 | 类型 | 必填 | 描述 |
 | --- | --- | --- | --- |
-| params | SignatureByGapReq | 是 | 骑缝签章请求对象 |
-| options | ConnectConfig | 否 | 请求配置对象 |
+| params | <a href="#SignatureByGapReq" >SignatureByGapReq</a> | 是 | 骑缝签章请求对象 |
+| options | <a href="#ConnectConfig" >ConnectConfig</a> | 否 | 请求配置对象 |
 
-### SignatureByGapReq 对象
+### <div id="SignatureByGapReq" >SignatureByGapReq 对象</div>
 | 名称 | 类型 | 必填 | 描述 |
 | --- | --- | --- | --- |
 | sealId | string | 是 | 印章id |
@@ -321,13 +321,13 @@ fileOpen({
 
 ## 全局接口请求配置
 
-####上文的接口描述中，每个需要网络请求的接口，都会有options的参数，用来配置单次请求的配置，除此之外，我们还提供了专门的方法设置全局请求配置
+#### 上文的接口描述中，每个需要网络请求的接口，都会有options的参数，用来配置单次请求的配置，除此之外，我们还提供了专门的方法设置全局请求配置
 
 configMgr 对象为全局接口请求配置对象，其中有两个方法
 
-configMgr.connectGet 获取当前全局接口请求配置对象，返回ConnectConfig对象
+configMgr.connectGet 获取当前全局接口请求配置对象，返回<a href="#ConnectConfig" >ConnectConfig</a>对象
 
-configMgr.connectSet 传入ConnectConfig对象 配置全局接口请求配置（如果单次接口请求传入了options,以接口传入的为准）
+configMgr.connectSet 传入<a href="#ConnectConfig" >ConnectConfig</a>对象 配置全局接口请求配置（如果单次接口请求传入了options,以接口传入的为准）
 
 
 

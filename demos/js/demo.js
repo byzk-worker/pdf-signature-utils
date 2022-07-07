@@ -62,7 +62,7 @@ async function closeFile() {
     }
 }
 
-async function getSealList() {
+async function getSealId() {
     try {
         var password = prompt("请插入usbkey，并输入usbkey密码：");
         if (isNull(password)) {
@@ -74,11 +74,9 @@ async function getSealList() {
             alert('当前usbkey中没有印章!');
             return;
         }
-        sessionStorage.setItem('seals', JSON.stringify(seals.sealInfoVo));
-        alert('获取印章成功！印象详情请见控制台');
-        console.info(seals.sealInfoVo);
+        return Promise.resolve({ sealId: seals.sealInfoVo[0].id, password });
     } catch (error) {
-        alert(error)
+        return Promise.reject(error);
     }
 }
 
@@ -89,27 +87,7 @@ async function postionSeal() {
             alert('请先打开文件');
             return;
         }
-        const sealsStr = sessionStorage.getItem('seals');
-        if (isNull(sealsStr)) {
-            alert('请先获取印章列表');
-            return;
-        }
-        let seals;
-        try {
-            seals = JSON.parse(sealsStr);
-        } catch (error) {
-            alert('解析印章列表失败，请重新获取');
-            return;
-        }
-        let sealId = seals[0].id;
-        let manualInputSeal = confirm('已为您默认印章列表的第一个印章，是否手工输入印章Id?');
-        if (manualInputSeal) {
-            sealId = prompt('请输入印章Id:');
-            if (isNull(sealId)) {
-                alert('印章Id不能为空');
-                return;
-            }
-        }
+        const { sealId, password } = await getSealId();
         let postions = [];
         let postionCount = 1;
         while (true) {
@@ -159,11 +137,6 @@ async function postionSeal() {
             alert('盖章取消');
             return;
         }
-        var password = prompt('输入当前插入usbkey设备密码:');
-        if (isNull(password)) {
-            alert("请输入设备密码!");
-            return;
-        }
         const newfileId = await signatureByPosition(fileId, sealId, postions, password);
         sessionStorage.setItem('fileId', newfileId);
         alert('盖章成功，新的文件Id见控制台');
@@ -180,27 +153,7 @@ async function keywordSeal() {
             alert('请先打开文件');
             return;
         }
-        const sealsStr = sessionStorage.getItem('seals');
-        if (isNull(sealsStr)) {
-            alert('请先获取印章列表');
-            return;
-        }
-        let seals;
-        try {
-            seals = JSON.parse(sealsStr);
-        } catch (error) {
-            alert('解析印章列表失败，请重新获取');
-            return;
-        }
-        let sealId = seals[0].id;
-        let manualInputSeal = confirm('已为您默认印章列表的第一个印章，是否手工输入印章Id?');
-        if (manualInputSeal) {
-            sealId = prompt('请输入印章Id:');
-            if (isNull(sealId)) {
-                alert('印章Id不能为空');
-                return;
-            }
-        }
+        const { sealId, password } = await getSealId();
         let keyword = prompt('请输入要盖章的关键字:');
         if (isNull(keyword)) {
             alert('请输入关键字!');
@@ -214,11 +167,6 @@ async function keywordSeal() {
                 alert('请输入正确的偏移量');
                 return;
             }
-        }
-        let password = prompt('输入当前插入usbkey设备密码:');
-        if (isNull(password)) {
-            alert('密码不能为空');
-            return;
         }
         const newfileId = await signatureByKeywords({ fileId, sealId, password, keywords: keyword, offset });
         sessionStorage.setItem('fileId', newfileId);
@@ -237,27 +185,7 @@ async function gapSeal() {
             alert('请先打开文件');
             return;
         }
-        const sealsStr = sessionStorage.getItem('seals');
-        if (isNull(sealsStr)) {
-            alert('请先获取印章列表');
-            return;
-        }
-        let seals;
-        try {
-            seals = JSON.parse(sealsStr);
-        } catch (error) {
-            alert('解析印章列表失败，请重新获取');
-            return;
-        }
-        let sealId = seals[0].id;
-        let manualInputSeal = confirm('已为您默认印章列表的第一个印章，是否手工输入印章Id?');
-        if (manualInputSeal) {
-            sealId = prompt('请输入印章Id:');
-            if (isNull(sealId)) {
-                alert('印章Id不能为空');
-                return;
-            }
-        }
+        const { sealId, password } = await getSealId();
         let x = prompt('请输入x坐标');
         try {
             x = parseInt(x);
@@ -290,11 +218,6 @@ async function gapSeal() {
         let type = prompt('请输入盖章类型（填入 all 或 odd 或 pair）：')
         if (type !== 'all' && type !== 'odd' && type !== 'pair') {
             alert('请输入正确的盖章类型');
-            return;
-        }
-        let password = prompt('输入当前插入usbkey设备密码:');
-        if (isNull(password)) {
-            alert('密码不能为空');
             return;
         }
         const newfileId = await signatureByGap({ fileId, sealId, x, y, splitPageNum, type, password });

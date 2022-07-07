@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <script src="../build/dist/pdf-signature-utils-iife.min.js"></script>
+    <script src="../build/index.js"></script>
     <script>
         const fileOpen = pdfSignatureUtils.fileOpen;
         const fileDownloadUrlGet = pdfSignatureUtils.fileDownloadUrlGet;
@@ -28,92 +28,86 @@
             var input = document.body.querySelector('#sealyName');
             return input.value;
         }
-        function uploadTest() {
-            fileOpen({
-                name: '测试文件名.pdf',
-                rawHtmlEle: document.getElementById("testFile"),
-            })["then"](function (fileId) {
-                sessionStorage.fileId = fileId;
-                console.info(fileId);
-                alert('文件上传成功,文件ID见控制台');
-            })['catch'](function () {
-
-            })
+        async function uploadTest() {
+            const fileId = await fileOpen({ name: '测试文件名.pdf', rawHtmlEle: document.getElementById("testFile"), });
+            sessionStorage.fileId = fileId;
+            console.info(fileId);
+            alert('文件上传成功,文件ID见控制台');
         }
         function getFile() {
             var fileId = sessionStorage.fileId;
             console.info(fileDownloadUrlGet(fileId));
             alert('下载地址请见控制台');
         }
-        // async function verifyTest() {
-        //     if (sessionStorage.fileId === undefined || sessionStorage.fileId === null || sessionStorage.fileId === '') {
-        //         alert('请先上传文件');
-        //         return;
-        //     }
-        //     const verifyRsp = await sealVerifyAll(sessionStorage.fileId);
-        //     console.info(verifyRsp);
-        //     alert('验章成功，结果请见控制台');
-        // }
-        // async function verifyOneTest() {
-        //     var name = getName();
-        //     const verifyRsp = await sealVerifyOne(sessionStorage.fileId, name);
-        //     console.info(verifyRsp);
-        //     alert('验证成功，结果见控制台');
-        // }
-        // async function querySealTest() {
-        //     const queryRsp = await sealList(getPwd());
-        //     console.info(queryRsp);
-        //     sessionStorage.seals = JSON.stringify(queryRsp.sealInfoVo);
-        //     alert('获取印章列表成功，结果请见控制台');
-        // }
-        // async function sealInTest() {
-        //     var fileId = sessionStorage.fileId;
-        //     var seals = JSON.parse(sessionStorage.seals);
-        //     var rsp = await signatureByPosition(fileId, seals[0].id, [{ pageNo: 1, x: 200, y: 300 }], getPwd());
-        //     console.info(rsp);
-        //     alert('盖章成功，新的文件id请见控制台');
-        // }
-        // async function sealInQFTest() {
-        //     var fileId = sessionStorage.fileId;
-        //     var seals = JSON.parse(sessionStorage.seals);
-        //     var payload = {
-        //         sealId: seals[0].id,
-        //         fileId,
-        //         x: 200,
-        //         y: 200,
-        //         splitPageNum: 2,
-        //         password: getPwd(),
-        //     }
-        //     var rsp = await signatureByGap(payload);
-        //     console.info(rsp);
-        //     alert('盖章成功，新的文件id请见控制台');
-        // }
-        // async function sealInManyTest() {
-        //     var fileId = sessionStorage.fileId;
-        //     var sealId = JSON.parse(sessionStorage.seals)[0].id;
-        //     var rsp = await signatureByPosition(fileId, sealId, [
-        //         { pageNo: 1, x: 200, y: 300 },
-        //         { pageNo: 2, x: 300, y: 200 },
-        //     ], getPwd());
-        //     console.info(rsp);
-        //     alert('盖章成功，新的文件id请见控制台');
-        // }
-        // async function keywordTest() {
-        //     var fileId = sessionStorage.fileId;
-        //     var sealId = JSON.parse(sessionStorage.seals)[0].id;
-        //     var rsp = await signatureByKeywords({
-        //         fileId, sealId, password: getPwd(),
-        //         keywords: '电脑',
-        //     });
-        //     console.info(rsp);
-        //     alert('盖章成功，新的文件见控制台');
-        // }
-        // async function deleteFile() {
-        //     var fileId = sessionStorage.fileId;
-        //     var rsp = await fileClose(fileId);
-        //     console.info(rsp);
-        //     alert('删除成功');
-        // }
+        async function verifyTest() {
+            if (sessionStorage.fileId === undefined || sessionStorage.fileId === null || sessionStorage.fileId === '') {
+                alert('请先上传文件');
+                return;
+            }
+            const verifyRsp = await sealVerifyAll(sessionStorage.fileId);
+            console.info(verifyRsp);
+            alert('验章成功，结果请见控制台');
+        }
+        async function verifyOneTest() {
+            var name = getName();
+            const verifyRsp = await sealVerifyOne(sessionStorage.fileId, name);
+            console.info(verifyRsp);
+            alert('验证成功，结果见控制台');
+        }
+        async function querySealTest() {
+            const queryRsp = await sealList(getPwd());
+            console.info(queryRsp);
+            sessionStorage.seals = JSON.stringify(queryRsp.sealInfoVo);
+            alert('获取印章列表成功，结果请见控制台');
+        }
+        async function sealInTest() {
+            var fileId = sessionStorage.fileId;
+            var seals = JSON.parse(sessionStorage.seals);
+            var rsp = await signatureByPosition(fileId, seals[0].id, [{ pageNo: 1, x: 200, y: 300 }], getPwd());
+            console.info(rsp);
+            alert('盖章成功，新的文件id请见控制台');
+        }
+        async function sealInQFTest() {
+            var fileId = sessionStorage.fileId;
+            var seals = JSON.parse(sessionStorage.seals);
+            var payload = {
+                sealId: seals[0].id,
+                fileId,
+                x: 200,
+                y: 200,
+                splitPageNum: 2,
+                password: getPwd(),
+            }
+            var rsp = await signatureByGap(payload);
+            console.info(rsp);
+            alert('盖章成功，新的文件id请见控制台');
+        }
+        async function sealInManyTest() {
+            var fileId = sessionStorage.fileId;
+            var sealId = JSON.parse(sessionStorage.seals)[0].id;
+            var rsp = await signatureByPosition(fileId, sealId, [
+                { pageNo: 1, x: 200, y: 300 },
+                { pageNo: 2, x: 300, y: 200 },
+            ], getPwd());
+            console.info(rsp);
+            alert('盖章成功，新的文件id请见控制台');
+        }
+        async function keywordTest() {
+            var fileId = sessionStorage.fileId;
+            var sealId = JSON.parse(sessionStorage.seals)[0].id;
+            var rsp = await signatureByKeywords({
+                fileId, sealId, password: getPwd(),
+                keywords: '电脑',
+            });
+            console.info(rsp);
+            alert('盖章成功，新的文件见控制台');
+        }
+        async function deleteFile() {
+            var fileId = sessionStorage.fileId;
+            var rsp = await fileClose(fileId);
+            console.info(rsp);
+            alert('删除成功');
+        }
     </script>
 </head>
 

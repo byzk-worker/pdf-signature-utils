@@ -14,7 +14,7 @@ const Global = `var process = {
 const configs: RollupOptions = {
     input: "src/index.ts",
     output: {
-        file: "build/pdf-signature-utils-iife.min.js",
+        file: "build/index.js",
         format: "iife",
         name: "pdfSignatureUtils",
         banner: Global,
@@ -30,18 +30,18 @@ const configs: RollupOptions = {
                 ["@babel/plugin-transform-runtime"],
             ]
         }),
-        terser({
-            ie8: true,
-            compress: {
-                drop_console: true,
-                drop_debugger: true,
-                ie8: true,
-            },
-            output: {
-                ie8: true,
-                comments: () => false,
-            },
-        }),
+        // terser({
+        //     ie8: true,
+        //     compress: {
+        //         drop_console: true,
+        //         drop_debugger: true,
+        //         ie8: true,
+        //     },
+        //     output: {
+        //         ie8: true,
+        //         comments: () => false,
+        //     },
+        // }),
     ],
 }
 

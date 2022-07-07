@@ -6,9 +6,10 @@
   "main": "./dist/pdf-signature-utils-es.min.js",
   "types": "./index.d.ts",
   "license": "MIT",
+  "homepage": "https://github.com/byzk-worker/pdf-signature-utils",
   "scripts": {
     "build": "node build.js",
-    "dev": "rollup --config rollup.config.js.ts --configPlugin typescript2 -w",
+    "dev": "node dev.js",
     "test": "jest"
   },
   "devDependencies": {

@@ -6,6 +6,7 @@
    "main": "./dist/pdf-signature-utils-es.min.js",
    "types": "./index.d.ts",
    "license": "MIT",
+   "homepage": "https://github.com/byzk-worker/pdf-signature-utils",
    "dependencies": {
       "spark-md5": "^3.0.2"
    }

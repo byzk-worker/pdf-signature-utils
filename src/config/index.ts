@@ -14,8 +14,8 @@ export const connectConfigGet = () => connConfig;
 export const connectConfigSet = (opt: ConnectConfig) => { connConfig = opt };
 
 
-export const baseUrl = 'http://192.168.100.151:28006';
-// export const baseUrl = 'http://127.0.0.1:28006';
+// export const baseUrl = 'http://192.168.100.151:28006';
+export const baseUrl = 'http://127.0.0.1:28006';
 
 
 export const requestError = {

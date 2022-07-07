@@ -7,11 +7,23 @@ import babel from 'rollup-plugin-babel';
 
 const configs: RollupOptions = {
     input: "src/index.ts",
-    output: {
-        file: "build/pdf-signature-utils-es.min.js",
-        format: "esm",
-        name: "pdfSignatureUtils"
-    },
+    output: [
+        {
+            file: "build/pdf-signature-utils-es.min.js",
+            format: "es",
+            name: "pdfSignatureUtils"
+        },
+        {
+            file: "build/pdf-signature-utils-cjs.min.js",
+            format: "cjs",
+            name: "pdfSignatureUtils"
+        },
+        {
+            file: "build/pdf-signature-utils-iife.min.js",
+            format: "iife",
+            name: "pdfSignatureUtils"
+        },
+    ],
     plugins: [
         typescript(),
         commonjs(),

@@ -100,8 +100,8 @@ fileOpen({
 | 名称 | 类型 | 必填 | 描述 |
 | --- | --- | --- | --- |
 | name | string | 是 | 名称 |
-| path | string | 是 | 路径 |
-| rawHtmlEle | HTMLInputElement | 否 | 原始HTML文件节点 |
+| path | string | 否 | 路径 |
+| rawHtmlEle | HTMLInputElement | 是 | 原始HTML文件节点 |
 | slicingPath | string | 否 | 分片地址， http文件上传接口地址，http全拼 |
 
 ### <div id="ConnectConfig" >ConnectConfig 对象</div>
@@ -171,12 +171,45 @@ fileOpen({
 ### <div id="SealVerifyInfo" >SealVerifyInfo 对象</div>
 | 名称 | 类型 | 必填 | 描述 |
 | --- | --- | --- | --- |
+| verifyResult | boolean | 是 | 验证是否成功 |
+| verifyMsg | string | 否 | 错误信息 仅在失败时返回 |
+| sealSingerCert | string | 是 | 签章者证书 |
+| sealMakerCert | string | 是 | 制章者证书 |
+| signatureInfo | <a href="#SignatureInfo" >SignatureInfo</a> | 是 | 签章信息 |
+| makerCertInfo | <a href="#MakerCertInfo" >MakerCertInfo</a> | 是 | 制章者信息 |
+| singerCertInfo | <a href="#SingerCertInfo" >SingerCertInfo</a> | 是 | 签章者信息 |
+
+
+### <div id="SignatureInfo" >SignatureInfo 对象</div>
+| 名称 | 类型 | 必填 | 描述 |
+| --- | --- | --- | --- |
 | signatureName | string | 是 | 签名域名称 |
-| verifyResult | boolean | 是 | 验证结果 |
-| verifyMsg | string | 否 | 错误信息 当 verifyResult 为 false 时 ，此值有内容 |
-| time | string | 是 | 签名时间 时间戳 |
-| page | number | 是 | 印章所在页码 |
-| userName | string[] | 是 | 签章人姓名 |
+| userName | string[] | 是 | 签章者名称 |
+| time | string | 是 | 签章时间 |
+| page | Number | 是 | 页码 |
+| sealMakerName | string | 是 | 制章者姓名 |
+
+### <div id="MakerCertInfo" >MakerCertInfo 对象</div>
+| 名称 | 类型 | 必填 | 描述 |
+| --- | --- | --- | --- |
+| serialNumber | string | 是 | 制章者证书序列号 |
+| signAlg | string | 是 | 签名算法 |
+| ownerName | string | 是 | 证书所有者名称 |
+| issueName | string | 是 | 颁发者名称 |
+| beginTime | string | 是 | 有效期开始时间 |
+| endTime | string | 是 | 有效期结束时间 |
+
+
+### <div id="SingerCertInfo" >SingerCertInfo 对象</div>
+| 名称 | 类型 | 必填 | 描述 |
+| --- | --- | --- | --- |
+| serialNumber | string | 是 | 制章者证书序列号 |
+| signAlg | string | 是 | 签名算法 |
+| ownerName | string | 是 | 证书所有者名称 |
+| issueName | string | 是 | 颁发者名称 |
+| beginTime | string | 是 | 有效期开始时间 |
+| endTime | string | 是 | 有效期结束时间 |
+
 
 
 ## sealVerifyAll 验证PDF中所有印章

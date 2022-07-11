@@ -1,7 +1,7 @@
 import { ConnectConfig } from "../types";
 import { getSealList, verifySeal, signature, signQF, signMany, signKeyword } from "../service";
 import { SealVerifyInfo, SealListRsp, SignatureByGapReq, SignatureByKeywordsReq, SignatureByPositionInfo } from "../types/SealType";
-import { arrayIsNull, isNull } from "../utils";
+import { arrayIsNull, isNull, mmConversionPx } from "../utils";
 
 interface IverifyRsp {
     fileId: string,
@@ -20,12 +20,12 @@ var verifyRspList: IverifyRsp[] = [];
 export const sealVerifyOne = async (fileId: string, name: string, options?: ConnectConfig): Promise<SealVerifyInfo> => {
     var obj = verifyRspList.find(m => m.fileId === fileId);
     if (!isNull(obj) && obj.rsp.length > 0) {
-        return Promise.resolve(obj.rsp.find(m => m.signatureName === name));
+        return Promise.resolve(obj.rsp.find(m => m.signatureInfo.signatureName === name));
     } else {
         try {
             var rsp = await sealVerifyAll(fileId, options);
             if (!isNull(rsp) && rsp.length > 0) {
-                return rsp.find(m => m.signatureName === name);
+                return rsp.find(m => m.signatureInfo.signatureName === name);
             } else {
                 return Promise.reject('未查询到对应的签名域');
             }
@@ -102,6 +102,14 @@ interface SealInReq {
  * @returns 签章后的新的文件id 
  */
 const sealIn = async (params: SealInReq, options?: ConnectConfig): Promise<string> => {
+    if (!isNull(params)) {
+        if (!isNull(params.positionX)) {
+            params.positionX = mmConversionPx(params.positionX);
+        }
+        if (!isNull(params.positionY)) {
+            params.positionY = mmConversionPx(params.positionY);
+        }
+    }
     const rst = await signature(params, options);
     return rst;
 }
@@ -153,6 +161,16 @@ interface SealInManyInfo {
  * @returns 
  */
 const sealInMany = async (params: SealInManyReq, options?: ConnectConfig): Promise<string> => {
+    if (!isNull(params) && !isNull(params.pages) && params.pages.length > 0) {
+        params.pages.forEach((m) => {
+            if (!isNull(m.positionX)) {
+                m.positionX = mmConversionPx(m.positionX);
+            }
+            if (!isNull(m.positionY)) {
+                m.positionY = mmConversionPx(m.positionY);
+            }
+        })
+    }
     const rst = await signMany(params, options);
     return rst;
 }
@@ -182,8 +200,14 @@ export const signatureByPosition = async (fileId: string, sealId: string, positi
  * @returns 签章后的文件id
  */
 export const signatureByGap = async (params: SignatureByGapReq, options?: ConnectConfig): Promise<string> => {
-    if (!params.splitPageNum) {
+    if (!params?.splitPageNum) {
         params.splitPageNum = 10;
+    }
+    if (!isNull(params?.x)) {
+        params.x = mmConversionPx(params.x);
+    }
+    if (!isNull(params?.y)) {
+        params.y = mmConversionPx(params.y);
     }
     const rst = await signQF(params, options);
     return rst;

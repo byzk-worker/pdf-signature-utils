@@ -35,3 +35,14 @@ export const isObject = (e: any) => {
     return e.toString() === "[object Object]";
 }
 
+/**
+ * mm转换为px
+ * @param value
+ * @returns {number}
+ */
+export function mmConversionPx(value: number) {
+    var inch = value / 25.4;
+    var c_value = inch * 72;
+    //      console.log(c_value);
+    return c_value;
+}

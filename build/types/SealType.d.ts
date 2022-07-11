@@ -3,29 +3,104 @@
  */
 export interface SealVerifyInfo {
     /**
+     * 验证是否成功
+     */
+    verifyResult: boolean;
+    /**
+     * 错误信息 仅在失败时返回
+     */
+    verifyMsg?: string;
+    /**
+     * 签章者证书
+     */
+    sealSingerCert: string;
+    /**
+     * 制章者证书
+     */
+    sealMakerCert: string;
+    /**
+     * 签章信息
+     */
+    signatureInfo: SignatureInfo;
+    /**
+     * 制章者信息
+     */
+    makerCertInfo: MakerCertInfo;
+    /**
+     * 签章者信息
+     */
+    singerCertInfo: SingerCertInfo;
+}
+export interface SignatureInfo {
+    /**
      * 签名域名称
      */
     signatureName: string;
     /**
-     * 验证结果
+     * 签章者名称
      */
-    verifyResult: boolean;
+    userName: string[];
     /**
-     * 错误信息 当 verifyResult 为 false 时 ，此值有内容
-     */
-    verifyMsg?: string;
-    /**
-     * 签名时间 时间戳
+     * 签章时间
      */
     time: string;
     /**
-     * 印章所在页码
+     * 页码
      */
-    page: number;
+    page: Number;
+    sealMakerName: string;
+}
+export interface MakerCertInfo {
     /**
-     * 签章人姓名
+     * 制章者证书序列号
      */
-    userName: string[];
+    serialNumber: string;
+    /**
+     * 签名算法
+     */
+    signAlg: string;
+    /**
+     * 证书所有者名称
+     */
+    ownerName: string;
+    /**
+     * 颁发者名称
+     */
+    issueName: string;
+    /**
+     * 有效期开始时间
+     */
+    beginTime: string;
+    /**
+     * 有效期结束时间
+     */
+    endTime: string;
+}
+export interface SingerCertInfo {
+    /**
+     * 签章者证书序列号
+     */
+    serialNumber: string;
+    /**
+     * 签名算法
+     */
+    signAlg: string;
+    /**
+     * 所有人名称
+     */
+    ownerName: string;
+    /**
+     * 颁发者名称
+     */
+    issueName: string;
+    /**
+     * 有效期开始时间
+     */
+    beginTime: string;
+    /**
+     * 有效期结束时间
+     */
+    endTime: string;
 }
 /**
  * 印章响应对象

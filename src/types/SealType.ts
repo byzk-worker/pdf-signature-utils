@@ -19,6 +19,10 @@ export interface SealVerifyInfo {
      */
     sealMakerCert: string,
     /**
+     * 电子印章信息
+     */
+    eSealInfo: ESealInfo,
+    /**
      * 签章信息
      */
     signatureInfo: SignatureInfo,
@@ -30,6 +34,41 @@ export interface SealVerifyInfo {
      * 签章者信息
      */
     singerCertInfo: SingerCertInfo,
+}
+
+export interface ESealInfo {
+    /**
+     * 电子印章标识
+     */
+    id: string,
+    /**
+     *  电子印章版本
+     */
+    version: string,
+    /**
+     * 厂商ID
+     */
+    vId: string,
+    /**
+     * 电子印章唯一编码
+     */
+    esId: string,
+    /**
+     * 印章名称
+     */
+    sealName: string,
+    /**
+     * 印章制作时间 
+     */
+    sealMakeTime: string,
+    /**
+     * 印章有效期开始时间
+     */
+    sealBeginTime: string,
+    /**
+     *  印章有效期结束时间
+     */
+    sealEndTime: string,
 }
 
 export interface SignatureInfo {

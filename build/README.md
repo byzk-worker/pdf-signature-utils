@@ -175,9 +175,23 @@ fileOpen({
 | verifyMsg | string | 否 | 错误信息 仅在失败时返回 |
 | sealSingerCert | string | 是 | 签章者证书 |
 | sealMakerCert | string | 是 | 制章者证书 |
+| eSealInfo | <a href="#ESealInfo" >ESealInfo</a> | 是 | 电子印章信息 |
 | signatureInfo | <a href="#SignatureInfo" >SignatureInfo</a> | 是 | 签章信息 |
 | makerCertInfo | <a href="#MakerCertInfo" >MakerCertInfo</a> | 是 | 制章者信息 |
 | singerCertInfo | <a href="#SingerCertInfo" >SingerCertInfo</a> | 是 | 签章者信息 |
+
+
+### <div id="ESealInfo" >ESealInfo 对象</div>
+| 名称 | 类型 | 必填 | 描述 |
+| --- | --- | --- | --- |
+| id | string | 是 | 电子印章标识 |
+| version | string | 是 | 电子印章版本 |
+| vId | string | 是 | 厂商ID |
+| esId | string | 是 | 电子印章唯一编码 |
+| sealName | string | 是 | 印章名称 |
+| sealMakeTime | string | 是 | 印章制作时间 |
+| sealBeginTime | string | 是 | 印章有效期开始时间 |
+| sealEndTime | string | 是 | 印章有效期结束时间 |
 
 
 ### <div id="SignatureInfo" >SignatureInfo 对象</div>
@@ -253,7 +267,7 @@ fileOpen({
 | 名称 | 类型 | 必填 | 描述 |
 | --- | --- | --- | --- |
 | id | string | 是 | 印章Id |
-| sealType | string | 是 | 印章类型："1":"机构印章"，"2":"个人印章" |
+| sealType | string | 是 | 印章类型："01":"法定名称章"; "02":"财务专用章"; "03":"发票专用章"; "04":"合同专用章"; "05":"电子名章"; "11":"业务专用章" |
 | sealCode | string | 是 | 印章编码 |
 | sealMsg | string | 是 | 印章名 |
 | algType | string | 是 | 算法类型 |

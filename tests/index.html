@@ -29,7 +29,23 @@
             return input.value;
         }
         async function uploadTest() {
-            const fileId = await fileOpen({ name: '测试文件名.pdf', rawHtmlEle: document.getElementById("testFile"), });
+            // const input = document.getElementById('testFile');
+            // if (!input.files || input.files.length <= 0) {
+            //     alert('请选择文件');
+            // }
+            // const reader = new FileReader();
+            // reader.onload = async (ev) => {
+            //     debugger
+            //     var base64Str = ev.target.result;
+            //     const fileId = await fileOpen({ name: '测试文件名.pdf', path: base64Str });
+            //     sessionStorage.fileId = fileId;
+            //     console.info(fileId);
+            //     alert('文件上传成功,文件ID见控制台');
+            // };
+            // reader.readAsDataURL(input.files[0]);
+            // var base64Str = ev.target.result;
+            const fileId = await fileOpen({ name: '测试文件名.pdf', path: 'https://192.168.100.151:28006/download/sealFile?fileId=ec1b1020ce8a15f8f0eab27f7b3a67a5' });
+            // const fileId = await fileOpen({ name: '测试文件名.pdf', path: 'https://192.168.100.151:28006/download/sealFile?fileId=c68a899863c02256269413eb0b02efec', rawHtmlEle: document.getElementById('testFile') });
             sessionStorage.fileId = fileId;
             console.info(fileId);
             alert('文件上传成功,文件ID见控制台');
@@ -86,8 +102,8 @@
             var fileId = sessionStorage.fileId;
             var sealId = JSON.parse(sessionStorage.seals)[0].id;
             var rsp = await signatureByPosition(fileId, sealId, [
-                { pageNo: 1, x: 200, y: 300 },
-                { pageNo: 2, x: 300, y: 200 },
+                { pageNo: 1, x: 100, y: 100 },
+                { pageNo: 2, x: 50, y: 80 },
             ], getPwd());
             console.info(rsp);
             alert('盖章成功，新的文件id请见控制台');

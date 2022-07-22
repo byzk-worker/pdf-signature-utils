@@ -8,12 +8,15 @@ export interface OpenFileReq {
     name: string;
     /**
      * 路径
+     * http(s)://
+     * file:///
+     * data:application/pdf;base64,
      */
     path?: string;
     /**
      * 原始HTML文件节点
      */
-    rawHtmlEle: HTMLInputElement;
+    rawHtmlEle?: HTMLInputElement;
     /**
      * 分片地址， http文件上传接口地址，http全拼
      */

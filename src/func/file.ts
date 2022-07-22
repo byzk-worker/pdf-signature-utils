@@ -1,6 +1,6 @@
 import { ConnectConfig, OpenFileReq } from "../types";
 import { newGuid, isNull, arrayIsNull } from '../utils'
-import { beginUpload, deleteFile, endUpload, sliceUpload } from "../service";
+import { addressUpload, beginUpload, deleteFile, endUpload, sliceUpload } from "../service";
 import { baseUrl, connectConfigGet, requestError } from "../config";
 import SparkMD5 from 'spark-md5'
 
@@ -77,11 +77,25 @@ export const fileOpen = async (req: OpenFileReq, options?: ConnectConfig): Promi
             }, TIMEOUT);
         }
 
-        const { name, rawHtmlEle } = req;
-        if (isNull(rawHtmlEle) || isNull(rawHtmlEle.files) || rawHtmlEle.files.length <= 0) {
-            return reject('检测到文件为空, 文件不能为空');
+        const { name, rawHtmlEle, path } = req;
+        if (!isNull(rawHtmlEle)) {
+            if (isNull(rawHtmlEle.files) || rawHtmlEle.files.length <= 0) {
+                return reject('未在rawHtmlEle中检测到文件');
+            }
+        } else if (isNull(path)) {
+            return reject('rawHtmlEle参数和path参数不能同时为空');
         }
         const fileGuid = newGuid();
+
+        if (isNull(rawHtmlEle) && !isNull(path)) {
+            try {
+                await addressUpload(fileGuid, path, { ...opt, timeout: -1 });
+            } catch (error) {
+                return reject(error);
+            }
+            return resolve(fileGuid);
+        }
+
         let sliceRsp: SplitFileRsp;
         const shardSize = 5 * 1024 * 1024;
         try {

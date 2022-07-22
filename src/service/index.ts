@@ -76,3 +76,7 @@ export const signKeyword = async (req: SignatureByKeywordsReq, options?: Connect
             keywordNo: req.hitNo
         }
     }, options);
+
+
+
+export const addressUpload = async (fileId: string, address: string, options?: ConnectConfig) => socketReq({ cmd: '/parserAddrUpload', data: { fileId, addr: address } }, options);

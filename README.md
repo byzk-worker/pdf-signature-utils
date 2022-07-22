@@ -100,9 +100,10 @@ fileOpen({
 | 名称 | 类型 | 必填 | 描述 |
 | --- | --- | --- | --- |
 | name | string | 是 | 名称 |
-| path | string | 否 | 路径 |
-| rawHtmlEle | HTMLInputElement | 是 | 原始HTML文件节点 |
+| path | string | 否 | 路径，当前支持格式：<p>1: `http协议(http(s)://)`</p> <p>2: `file协议(file:///)`</p> <p>3: `MIME BASE64协议(data:application/pdf;base64,)`</p> |
+| rawHtmlEle | HTMLInputElement | 否 | 原始HTML文件节点 |
 | slicingPath | string | 否 | 分片地址， http文件上传接口地址，http全拼 |
+<font color='red' >OpenFileReq 对象中 path 和 rawHtmlEle 不可同时为空，同时传入，优先取rawHtmlEle</font>
 
 ### <div id="ConnectConfig" >ConnectConfig 对象</div>
 ##### ConnectConfig 对象为接口请求配置对象，后续接口参数中的ConnectConfig对象同此对象

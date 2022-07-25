@@ -387,7 +387,7 @@ configMgr.connectSet 传入<a href="#ConnectConfig" >ConnectConfig</a>对象 配
 import { fileOpen } from "@byzk/pdf-signature-utils";
 async function FileOpenTest(){
     try {
-        const fileId = await fileOpen({name:'测试文件.pdf', rawHtmlEle:document.getElementById("uploadinput")});
+        const fileId = await fileOpen({name:'测试文件.pdf', path: 'https://192.168.100.151:28006/download/sealFile?fileId=ec1b1020ce8a15f8f0eab27f7b3a67a5'});
         alert('文件打开成功，文件Id请见控制台');
         console.info(fileId);
     } catch (error) {

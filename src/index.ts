@@ -1,7 +1,7 @@
 import { connectInit } from './service/utils'
 import { connectConfigGet, connectConfigSet, requestError } from './config'
 import { sealVerifyOne, sealVerifyAll, sealList, signatureByPosition, signatureByKeywords, signatureByGap } from './func/seal'
-import { fileOpen, fileClose, fileDownloadUrlGet } from './func/file'
+import { fileOpen, fileClose, fileDownloadUrlGet, saveToBase64, saveToLocal, saveToHttp } from './func/file'
 
 //连接本地服务
 connectInit();
@@ -25,6 +25,9 @@ export {
     fileOpen,
     fileDownloadUrlGet,
     fileClose,
+    saveToBase64,
+    saveToLocal,
+    saveToHttp,
     sealVerifyOne,
     sealVerifyAll,
     sealList,

@@ -17,6 +17,9 @@
         const signatureByPosition = pdfSignatureUtils.signatureByPosition;
         const signatureByGap = pdfSignatureUtils.signatureByGap;
         const signatureByKeywords = pdfSignatureUtils.signatureByKeywords;
+        const saveToBase64 = pdfSignatureUtils.saveToBase64;
+        const saveToLocal = pdfSignatureUtils.saveToLocal;
+        const saveToHttp = pdfSignatureUtils.saveToHttp;
     </script>
     <script>
         function getPwd() {
@@ -29,26 +32,26 @@
             return input.value;
         }
         async function uploadTest() {
-            // const input = document.getElementById('testFile');
-            // if (!input.files || input.files.length <= 0) {
-            //     alert('请选择文件');
-            // }
-            // const reader = new FileReader();
-            // reader.onload = async (ev) => {
-            //     debugger
-            //     var base64Str = ev.target.result;
-            //     const fileId = await fileOpen({ name: '测试文件名.pdf', path: base64Str });
-            //     sessionStorage.fileId = fileId;
-            //     console.info(fileId);
-            //     alert('文件上传成功,文件ID见控制台');
-            // };
-            // reader.readAsDataURL(input.files[0]);
+            const input = document.getElementById('testFile');
+            if (!input.files || input.files.length <= 0) {
+                alert('请选择文件');
+            }
+            const reader = new FileReader();
+            reader.onload = async (ev) => {
+                debugger
+                var base64Str = ev.target.result;
+                const fileId = await fileOpen({ name: '测试文件名.pdf', path: base64Str });
+                sessionStorage.fileId = fileId;
+                console.info(fileId);
+                alert('文件上传成功,文件ID见控制台');
+            };
+            reader.readAsDataURL(input.files[0]);
             // var base64Str = ev.target.result;
-            const fileId = await fileOpen({ name: '测试文件名.pdf', path: 'https://192.168.100.151:28006/download/sealFile?fileId=ec1b1020ce8a15f8f0eab27f7b3a67a5' });
+            // const fileId = await fileOpen({ name: '测试文件名.pdf', path: 'https://192.168.100.151:28006/download/sealFile?fileId=ec1b1020ce8a15f8f0eab27f7b3a67a5' });
             // const fileId = await fileOpen({ name: '测试文件名.pdf', path: 'https://192.168.100.151:28006/download/sealFile?fileId=c68a899863c02256269413eb0b02efec', rawHtmlEle: document.getElementById('testFile') });
-            sessionStorage.fileId = fileId;
-            console.info(fileId);
-            alert('文件上传成功,文件ID见控制台');
+            // sessionStorage.fileId = fileId;
+            // console.info(fileId);
+            // alert('文件上传成功,文件ID见控制台');
         }
         function getFile() {
             var fileId = sessionStorage.fileId;
@@ -124,6 +127,28 @@
             console.info(rsp);
             alert('删除成功');
         }
+        async function saveTest() {
+            const fileId = sessionStorage.fileId;
+            var rsp = await saveToHttp(fileId, 'http://192.168.100.153:34527/api/uploadFile');
+            console.info(rsp);
+            alert('保存成功');
+            // var xhr = new XMLHttpRequest();
+            // // xhr.setRequestHeader('')
+            // xhr.open('POST', 'http://192.168.100.153:34527/api/uploadFile');
+            // xhr.onreadystatechange = () => {
+            //     if (xhr.readyState === 4) {
+            //         if (xhr.status === 200) {
+            //             console.info(xhr.responseText);
+            //         } else {
+            //             console.info('错误错误错误!');
+            //         }
+            //     }
+            // }
+            // var data = new FormData();
+            // const input = document.getElementById('testFile');
+            // data.append('pdfFile', input.files[0]);
+            // xhr.send(data);
+        }
     </script>
 </head>
 
@@ -138,6 +163,8 @@
     <button onclick="uploadTest()">上传测试</button>
     <div style="height: 42px;"></div>
     <button onclick="getFile()">获取下载地址（基于上传）</button>
+    <div style="height: 42px;"></div>
+    <button onclick="saveTest()">保存文件（基于上传）</button>
     <div style="height: 42px;"></div>
     <button onclick="deleteFile()">删除测试</button>
     <div style="height: 42px;"></div>

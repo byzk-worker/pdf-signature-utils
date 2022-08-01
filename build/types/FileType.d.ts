@@ -22,3 +22,25 @@ export interface OpenFileReq {
      */
     slicingPath?: string;
 }
+export interface SaveToHttpOptions {
+    /**
+     * 上传方式
+     */
+    method?: 'POST' | 'PUT';
+    /***
+     * form字段中，文件字段的字段名
+     */
+    fieldName?: string;
+    /**
+     * 要保存成的文件名
+     */
+    filename?: string;
+    /**
+     * http请求头
+     */
+    headers?: any;
+    /**
+     * formdata
+     */
+    form?: FormData;
+}

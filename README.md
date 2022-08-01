@@ -136,9 +136,174 @@ fileOpen({
 | - | string | 是 | 文件下载地址 |
 
 
+## saveToBase64 文件保存为base64字符串
+
+#### 调用此接口，传入文件ID，将文件保存为base64字符串
+
+### 请求参数
+
+| 名称 | 类型 | 必填 | 描述 |
+| --- | --- | --- | --- |
+| fileId | string | 是 | 文件Id |
+| options | <a href="#ConnectConfig" >ConnectConfig</a> | 否 | 请求配置对象 |
+
+### 响应参数
+| 名称 | 类型 | 必填 | 描述 |
+| --- | --- | --- | --- |
+| - | string | 是 | 文件base64字符串（不带base64头） |
+
+
+## saveToLocal 文件保存至本地
+
+#### 调用此接口，传入文件ID和本地地址，将文件保存在本地物理地址上
+
+### 请求参数
+
+| 名称 | 类型 | 必填 | 描述 |
+| --- | --- | --- | --- |
+| fileId | string | 是 | 文件Id |
+| path | string | 是 | 要保存的本地文件地址，例如：D:\JobTest\FileSave\test.pdf |
+| options | <a href="#ConnectConfig" >ConnectConfig</a> | 否 | 请求配置对象 |
+
+### 响应参数
+| 名称 | 类型 | 必填 | 描述 |
+| --- | --- | --- | --- |
+| - | boolean | 是 | 保存是否成功 |
+
+
+## saveToHttp 文件保存至远端（http方式）
+
+#### 调用此接口，传入文件ID和远端地址接口地址，将文件保存在远端
+
+### 请求参数
+
+| 名称 | 类型 | 必填 | 描述 |
+| --- | --- | --- | --- |
+| fileId | string | 是 | 文件Id |
+| url | string | 是 | 远端地址,例如: http://192.168.100.153:34527/api/uploadFile |
+| httpOptions | <a href="#SaveToHttpOptions" >SaveToHttpOptions</a> | 否 | 文件保存至远端http请求配置对象 |
+| options | <a href="#ConnectConfig" >ConnectConfig</a> | 否 | 本接口请求控制对象 |
+
+### <div id="SaveToHttpOptions" >SaveToHttpOptions 对象</div>
+| 名称 | 类型 | 必填 | 描述 |
+| --- | --- | --- | --- |
+| method | <span>`POST | PUT`</span> | 否 | 请求方式,默认为POST请求 |
+| fieldName | string | 否 | 文件字段字段名,默认为'file' |
+| filename | string | 否 | 文件名称,默认为调用fileOpen时传入的名称 |
+| headers | object | 否 | http请求头 |
+| form | FormData | 否 | form表单信息 |
+
+### 响应参数
+| 名称 | 类型 | 必填 | 描述 |
+| --- | --- | --- | --- |
+| - | boolean | 是 | 保存是否成功 |
+
+
+## saveToHttp 文件保存至远端（http方式） 远端接收示例
+
+### java `基于StringBoot`
+``` java
+/**
+ * 文件上传.
+ */
+@RestController
+@Slf4j
+@RequestMapping("/FileMgr")
+public class FileMgrController {
+    
+    /**
+     * 文件上传.
+     * @param file springboot接收文件参数
+     * @return 结果
+     */
+    @RequestMapping("/fileUpload")
+    public String fileUpload1(MultipartFile file) {
+        if (file == null) {
+            return "文件上传失败：文件为空"; //文件为空，上传失败，返回错误提示
+        }
+        //获取文件输入流信息
+        InputStream inputStream = file.getInputStream();
+        //文件存储路径
+        File f = new File("D:\\file\\document\\file.pdf");
+        //文件输出流
+        OutputStream outputStream = new FileOutputStream(f);
+        byte[] buff = new byte[1024];
+        int len;
+        try {
+            //将文件输入流读入字节数组并通过输出流循环写到文件
+            while ((len = inputStream.read(buff)) != -1) {
+                outputStream.write(buff, 0, len);
+            }
+            return "文件上传成功";  //文件上传成功，返回成功提示
+        } catch (IOException exception) {
+            log.info("写文件异常");
+            return "失败:写文件异常";  //如果出现异常，返回错误提示
+        } finally {
+            outputStream.close(); //关闭文件输出流
+        }
+    }
+}
+```
+
+
+### c# `基于Microsoft.AspNetCore.Mvc(3.1.4)`
+``` cs
+public IActionResult UploadFile()
+{
+    //获取上传的文件
+    var file = HttpContext.Request.Form.Files["file"];
+    if (file == null)
+    {
+        //如上传出现异常，返回500状态码即可
+        return StatusCode(500);
+    }
+
+    //保存路径
+    var fileSavePath = @"D:\JobTest\FileSave\";
+    //创建保存文件流
+    using var stream = new FileStream(fileSavePath + file.FileName, FileMode.CreateNew);
+    //保存上传的文件
+    file.CopyTo(stream);
+
+    //上传完成，返回200状态码
+    return StatusCode(200);
+}
+```
+
+### go `基于 go 1.18`
+``` go
+uploadHttpHandFunc http.HandlerFunc = func(writer http.ResponseWriter, request *http.Request) {
+	// 从表单中获取文件 pdfFile 为 js接口中的fieldName字段
+	file, _, err := request.FormFile("file")
+	if err != nil {
+		writer.WriteHeader(500)
+		return
+	}
+	defer file.Close()
+
+	// 获取文件详细内容
+	allBytes, err := ioutil.ReadAll(file)
+	if err != nil {
+		writer.WriteHeader(500)
+		return
+	}
+
+	// 保存文件内容
+	if err = ioutil.WriteFile(targetFile, allBytes, 0655); err != nil {
+		writer.WriteHeader(500)
+		return
+	}
+
+	// 向客户端返回200状态吗，状态码<200或>299即为上传失败
+	writer.WriteHeader(200)
+}
+```
+
+
+
 ## fileClose 文件关闭接口
 
-#### 调用接口，传入文件ID，讲文件关闭。当不再需要某个文件时，调用此接口，释放内存。
+#### 调用接口，传入文件ID，将文件关闭。当不再需要某个文件时，调用此接口，释放内存。
 
 ### 请求参数
 | 名称 | 类型 | 必填 | 描述 |
@@ -150,6 +315,7 @@ fileOpen({
 | 名称 | 类型 | 必填 | 描述 |
 | --- | --- | --- | --- |
 | - | boolean | 是 | 删除是否成功 |
+
 
 
 ## sealVerifyOne 验证PDF中指定签名域的印章

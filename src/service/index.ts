@@ -80,3 +80,21 @@ export const signKeyword = async (req: SignatureByKeywordsReq, options?: Connect
 
 
 export const addressUpload = async (fileId: string, address: string, options?: ConnectConfig) => socketReq({ cmd: '/parserAddrUpload', data: { fileId, addr: address } }, options);
+
+
+export const fileSave = async (type: 'base64' | 'local' | 'http', data: any, options?: ConnectConfig) => {
+    let cmd = '';
+    switch (type) {
+        case 'base64':
+            cmd = '/file/save2Base64';
+            break;
+        case 'local':
+            cmd = '/file/save2Local';
+            break;
+        case 'http':
+            cmd = '/file/save2Http';
+            break;
+    }
+    var rsp = await socketReq({ cmd, data, }, options);
+    return rsp;
+}

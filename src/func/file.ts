@@ -1,6 +1,6 @@
-import { ConnectConfig, OpenFileReq } from "../types";
+import { ConnectConfig, OpenFileReq, SaveToHttpOptions } from "../types";
 import { newGuid, isNull, arrayIsNull } from '../utils'
-import { addressUpload, beginUpload, deleteFile, endUpload, sliceUpload } from "../service";
+import { addressUpload, beginUpload, deleteFile, endUpload, fileSave, sliceUpload } from "../service";
 import { baseUrl, connectConfigGet, requestError } from "../config";
 import SparkMD5 from 'spark-md5'
 
@@ -62,6 +62,21 @@ const fileSplit = (file: File, shardSize: number = 5 * 1024 * 1024): Promise<Spl
     });
 }
 
+let fileCaches = [];
+
+const addCache = (fileId: string, name: string) => {
+    deleteCache(fileId);
+    fileCaches.push({ fileId, name });
+}
+
+const deleteCache = (fileId: string) => {
+    fileCaches = fileCaches.filter(m => m.fileId !== fileId);
+}
+
+const getFileNameByCache = (fileId: string) => {
+    return fileCaches.find(m => m.fileId === fileId)?.name;
+}
+
 /**
  * 上传文件接口
  */
@@ -93,6 +108,7 @@ export const fileOpen = async (req: OpenFileReq, options?: ConnectConfig): Promi
             } catch (error) {
                 return reject(error);
             }
+            addCache(fileGuid, req.name);
             return resolve(fileGuid);
         }
 
@@ -145,7 +161,7 @@ export const fileOpen = async (req: OpenFileReq, options?: ConnectConfig): Promi
             return reject(error);
         }
 
-
+        addCache(fileGuid, req.name);
         return resolve(fileGuid);
     });
 }
@@ -169,3 +185,47 @@ export const fileClose = async (fileId: string, options?: ConnectConfig): Promis
     }
 }
 
+/**
+ * 将文件保存为base64
+ * @param fileId 文件id
+ * @param options 连接选项
+ * @returns base64字符串
+ */
+export const saveToBase64 = async (fileId: string, options?: ConnectConfig) => {
+    var rsp = await fileSave('base64', { fileId }, options);
+    return rsp;
+}
+
+/**
+ * 将文件保存至本地指定路径
+ * @param fileId 文件id
+ * @param path 本地路径，全路径，如： D://filePaht/a.pdf
+ * @param options 连接选项
+ * @returns 保存是否成功
+ */
+export const saveToLocal = async (fileId: string, path: string, options?: ConnectConfig) => {
+    await fileSave('local', { fileId, addr: path }, options);
+    return true;
+}
+
+/**
+ * 将文件保存至远端
+ * @param fileId 文件id
+ * @param url 远端地址 如: http(s)://wwww.fileaddress.com/upload
+ * @param httpOptions 上传选项 可空
+ * @param options 连接选项
+ * @returns 保存是否成功
+ */
+export const saveToHttp = async (fileId: string, url: string, httpOptions?: SaveToHttpOptions, options?: ConnectConfig) => {
+    if (isNull(httpOptions)) {
+        httpOptions = {};
+    }
+    if (isNull(httpOptions.filename)) {
+        var cacheName = getFileNameByCache(fileId);
+        if (!isNull(cacheName)) {
+            httpOptions.filename = cacheName;
+        }
+    }
+    await fileSave('http', { fileId, addr: url, targetHttpOption: JSON.stringify(httpOptions) }, options);
+    return true;
+}

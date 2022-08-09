@@ -23,6 +23,9 @@ export interface OpenFileReq {
     slicingPath?: string;
 }
 
+export interface HttpFormData {
+    [key: string]: string
+}
 
 export interface SaveToHttpOptions {
     /**
@@ -42,7 +45,10 @@ export interface SaveToHttpOptions {
      */
     headers?: any,
     /**
-     * formdata
+     * formdata http表单数据，格式示例：
+     * {
+     *   'token':'123848292'
+     * }
      */
-    form?: FormData,
+    form?: HttpFormData,
 }

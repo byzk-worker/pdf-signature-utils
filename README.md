@@ -191,7 +191,7 @@ fileOpen({
 | fieldName | string | 否 | 文件字段字段名,默认为'file' |
 | filename | string | 否 | 文件名称,默认为调用fileOpen时传入的名称 |
 | headers | object | 否 | http请求头 |
-| form | FormData | 否 | form表单信息 |
+| form | object | 否 | formdata http表单数据，格式示例：<br/> {'token':'123456789'} |
 
 ### 响应参数
 | 名称 | 类型 | 必填 | 描述 |

@@ -129,7 +129,7 @@
         }
         async function saveTest() {
             const fileId = sessionStorage.fileId;
-            var rsp = await saveToHttp(fileId, 'http://192.168.100.153:34527/api/uploadFile');
+            var rsp = await saveToHttp(fileId, 'http://192.168.100.153:34527/api/uploadFile', { fileName: '测试PDF.pdf', form: { 'token': '123456789' } });
             console.info(rsp);
             alert('保存成功');
             // var xhr = new XMLHttpRequest();

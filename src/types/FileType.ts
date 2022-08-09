@@ -27,6 +27,10 @@ export interface HttpFormData {
     [key: string]: string
 }
 
+export interface HttpHeaders {
+    [key: string]: string
+}
+
 export interface SaveToHttpOptions {
     /**
      * 上传方式
@@ -41,9 +45,12 @@ export interface SaveToHttpOptions {
      */
     filename?: string,
     /**
-     * http请求头
+     * http请求头，格式示例：
+     * {
+     *  '_t':'1145141919810'
+     * }
      */
-    headers?: any,
+    headers?: HttpHeaders,
     /**
      * formdata http表单数据，格式示例：
      * {

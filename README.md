@@ -187,11 +187,11 @@ fileOpen({
 ### <div id="SaveToHttpOptions" >SaveToHttpOptions 对象</div>
 | 名称 | 类型 | 必填 | 描述 |
 | --- | --- | --- | --- |
-| method | <span>`POST | PUT`</span> | 否 | 请求方式,默认为POST请求 |
+| method | <span>`POST 或 PUT`</span> | 否 | 请求方式,默认为POST请求 |
 | fieldName | string | 否 | 文件字段字段名,默认为'file' |
 | filename | string | 否 | 文件名称,默认为调用fileOpen时传入的名称 |
-| headers | object | 否 | http请求头 |
-| form | object | 否 | formdata http表单数据，格式示例：<br/> {'token':'123456789'} |
+| headers | object | 否 | http请求头，格式示例：<br /> { '_t' : '1145141919810' } |
+| form | object | 否 | formdata http表单数据，格式示例：<br/> { 'token' : '123456789' } |
 
 ### 响应参数
 | 名称 | 类型 | 必填 | 描述 |

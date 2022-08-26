@@ -53,13 +53,22 @@ export const signQF = async (req: SignatureByGapReq, options?: ConnectConfig) =>
 
 
 export const signMany = async (req: any, options?: ConnectConfig) =>
+    // socketReq({
+    //     cmd: '/seal/signSiteBatch',
+    //     data: {
+    //         id: req.sealId,
+    //         fileId: req.fileId,
+    //         keyPwd: req.pwd,
+    //         pageList: req.pages.map((m) => { return { pageNum: m.page, x: m.positionX, y: m.positionY } }),
+    //     },
+    // }, options);
     socketReq({
         cmd: '/seal/signSiteBatch',
         data: {
             id: req.sealId,
             fileId: req.fileId,
             keyPwd: req.pwd,
-            pageList: req.pages.map((m) => { return { pageNum: m.page, x: m.positionX, y: m.positionY } }),
+            pageList: req.pages.map((m) => { return { pageNum: m.page, xPosition: m.positionX, yPosition: m.positionY } }),
         },
     }, options);
 

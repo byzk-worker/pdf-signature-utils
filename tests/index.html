@@ -106,6 +106,7 @@
             var sealId = JSON.parse(sessionStorage.seals)[0].id;
             var rsp = await signatureByPosition(fileId, sealId, [
                 { pageNo: 1, x: 100, y: 100 },
+                { pageNo: 1, x: 50, y: 50 },
                 { pageNo: 2, x: 50, y: 80 },
             ], getPwd());
             console.info(rsp);
